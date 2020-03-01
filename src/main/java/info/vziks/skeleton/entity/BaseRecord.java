@@ -17,6 +17,7 @@ import java.util.Date;
 abstract public class BaseRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
+
     @Column(columnDefinition = "serial")
     private Long id;
 

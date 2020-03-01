@@ -3,15 +3,15 @@ package info.vziks.skeleton.entity;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(indexes = {
         @Index(name = "news_k_name", columnList = "name"),
         @Index(name = "news_k_id_url", columnList = "id,url")
 })
-public class News extends BaseRecord {
+public class News extends BaseRecord implements Serializable {
 
     @Column(length = 500)
     private String url;

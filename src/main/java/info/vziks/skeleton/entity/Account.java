@@ -3,17 +3,12 @@ package info.vziks.skeleton.entity;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
-/**
- * Class Account
- * Project web-spring
- *
- * @author Anton Prokhorov <vziks@live.ru>
- */
 @Entity
 @Table(name = "users", indexes = {@Index(name = "users_k_nick", columnList = "nick")})
-public class Account extends BaseRecord {
+public class Account extends BaseRecord implements Serializable {
 
     @Column(length = 100)
     private String nick;
