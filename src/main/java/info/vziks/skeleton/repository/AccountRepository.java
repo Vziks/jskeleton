@@ -23,5 +23,5 @@ public interface AccountRepository extends CrudRepository<Account, Long> {
 
 
     @Query("SELECT a FROM Account a WHERE a.name=:name and a.email=:email")
-    List<Account> fetchArticles(@Param("name") String anme, @Param("email") String email);
+    List<Account> fetchAccounts(@Param("name") String name, @Param("email") String email);
 }
