@@ -1,13 +1,17 @@
 package info.vziks.skeleton.controller;
 
 import info.vziks.skeleton.entity.Account;
-import info.vziks.skeleton.repository.AccountRepository;
-import info.vziks.skeleton.service.RedisService;
+import info.vziks.skeleton.service.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.Map;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * Class AccountController
@@ -20,52 +24,57 @@ import java.util.Map;
 public class AccountController {
 
     @Autowired
-    RedisService redisService;
+    private IAccountService accountService;
 
-    @Autowired
-    AccountRepository accountRepository;
-
-    @PostMapping(path = "/add")
-    public @ResponseBody
-    String addNewUser(@RequestParam String name, @RequestParam String email) {
-        Account user;
-        user = accountRepository.findByEmail(email);
-        if (user != null) {
-            return user.toString();
+    @GetMapping("/{id}")
+    public ResponseEntity<Account> getAccountById(@PathVariable("id") Integer id) {
+        Account account = accountService.getAccountById(id);
+        if (!Objects.isNull(account)) {
+            return new ResponseEntity<>(account, HttpStatus.OK);
         }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
+    @PostMapping(path = "/add2")
+    public ResponseEntity<Void> addNewUser(@RequestParam String name, @RequestParam String email, UriComponentsBuilder builder) {
+        Account user;
         user = new Account();
         user.setEmail(email);
         user.setName(name);
-        accountRepository.save(user);
 
-        System.out.println();
-
-        return user.toString();
+        return getVoidResponseEntity(builder, user);
     }
 
-    @GetMapping(path = "/all")
-    public @ResponseBody
-    Iterable<Account> getAllUsers() {
-        return accountRepository.findAll();
+    private ResponseEntity<Void> getVoidResponseEntity(UriComponentsBuilder builder, Account user) {
+        boolean flag = accountService.addAccount(user);
+        if (!flag) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(builder.path("/account/{id}").buildAndExpand(user.getId()).toUri());
+        return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
-    @GetMapping("/map")
-    public String map(Map<String, Object> model) {
+    @GetMapping("/all")
+    public ResponseEntity<List<Account>> getAllAccounts() {
+        List<Account> list = accountService.getAllAccounts();
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
 
+    @PostMapping("/add")
+    public ResponseEntity<Void> addAccount(@RequestBody Account account, UriComponentsBuilder builder) {
+        return getVoidResponseEntity(builder, account);
+    }
 
-        String nameofCurrMethod = new Object() {}
-                .getClass()
-                .getEnclosingMethod()
-                .getName();
+    @PutMapping("/put")
+    public ResponseEntity<Account> updateAccount(@RequestBody Account account) {
+        accountService.updateAccount(account);
+        return new ResponseEntity<>(account, HttpStatus.OK);
+    }
 
-
-        redisService.set(nameofCurrMethod);
-        System.out.println(nameofCurrMethod);
-//        System.out.println(redisService.toString());
-
-        model.put("map1", 111);
-        model.put("map2", 222);
-        return "map";
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteAccount(@PathVariable("id") Integer id) {
+        accountService.deleteAccount(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

@@ -7,6 +7,13 @@ import org.hibernate.annotations.TypeDefs;
 import javax.persistence.*;
 import java.util.Date;
 
+
+/**
+ * Class BaseRecord
+ * Project web-spring
+ *
+ * @author Anton Prokhorov <vziks@live.ru>
+ */
 @TypeDefs({
         @TypeDef(
                 name = "int-array",

@@ -6,6 +6,12 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * Class News
+ * Project web-spring
+ *
+ * @author Anton Prokhorov <vziks@live.ru>
+ */
 @Entity
 @Table(indexes = {
         @Index(name = "news_k_name", columnList = "name"),
@@ -59,7 +65,7 @@ public class News extends BaseRecord implements Serializable {
     private short top;
 
     @Column(columnDefinition = "SMALLINT default '0'::SMALLINT")
-    @Type(type="org.hibernate.type.ShortType")
+    @Type(type = "org.hibernate.type.ShortType")
     private short bad;
 
 

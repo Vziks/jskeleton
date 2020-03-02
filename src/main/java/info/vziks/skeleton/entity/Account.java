@@ -6,9 +6,17 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * Class AccountRepository
+ * Project web-spring
+ *
+ * @author Anton Prokhorov <vziks@live.ru>
+ */
 @Entity
 @Table(name = "users", indexes = {@Index(name = "users_k_nick", columnList = "nick")})
 public class Account extends BaseRecord implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Column(length = 100)
     private String nick;

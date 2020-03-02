@@ -7,6 +7,12 @@ import java.io.Serializable;
 import java.util.Date;
 
 
+/**
+ * Class Persons
+ * Project web-spring
+ *
+ * @author Anton Prokhorov <vziks@live.ru>
+ */
 @Entity
 @Table(indexes = {@Index(name = "persons_k_name", columnList = "name")})
 public class Persons extends BaseRecord implements Serializable {
