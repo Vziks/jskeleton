@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="base :: head(~{::title})">
+    <title>Вход</title>
+</head>
+<body>
+<!--<span th:replace="index::name">SprinBoot</span>-->
+<section th:insert="index::header"></section>
+<div class="login-page">
+    <div class="form">
+        <form class="login-form" th:method="POST" th:action="@{/auth/login}">
+            <div th:if="${param.error}">
+                <div class="alert alert-danger">
+                    Invalid username or password.
+                </div>
+            </div>
+            <div th:if="${param.logout}">
+                <div class="alert alert-info">
+                    You have been logged out.
+                </div>
+            </div>
+            <input name="username" type="text" class="form-control" id="username" placeholder="Введите логин">
+            <input name="password" type="password" class="form-control" id="password" placeholder="Введите пароль">
+            <button>login</button>
+            <p class="message">Not registered? <a th:href="@{/auth/registration}">Create an account</a></p>
+        </form>
+    </div>
+</div>
+</body>
+</html>

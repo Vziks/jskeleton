@@ -75,4 +75,139 @@ public class Persons extends BaseRecord implements Serializable {
     @Column(length = 100)
     private short facebook;
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getNameOriginal() {
+        return nameOriginal;
+    }
+
+    public void setNameOriginal(String nameOriginal) {
+        this.nameOriginal = nameOriginal;
+    }
+
+    public String getNameNominative() {
+        return nameNominative;
+    }
+
+    public void setNameNominative(String nameNominative) {
+        this.nameNominative = nameNominative;
+    }
+
+    public String getNameFenitive() {
+        return nameFenitive;
+    }
+
+    public void setNameFenitive(String nameFenitive) {
+        this.nameFenitive = nameFenitive;
+    }
+
+    public String getNamePrepositional() {
+        return namePrepositional;
+    }
+
+    public void setNamePrepositional(String namePrepositional) {
+        this.namePrepositional = namePrepositional;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
+    public String getInfoShort() {
+        return infoShort;
+    }
+
+    public void setInfoShort(String infoShort) {
+        this.infoShort = infoShort;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
+    public String getPhotoSource() {
+        return photoSource;
+    }
+
+    public void setPhotoSource(String photoSource) {
+        this.photoSource = photoSource;
+    }
+
+    public Date getBirthDay() {
+        return birthDay;
+    }
+
+    public void setBirthDay(Date birthDay) {
+        this.birthDay = birthDay;
+    }
+
+    public Date getDeathDay() {
+        return deathDay;
+    }
+
+    public void setDeathDay(Date deathDay) {
+        this.deathDay = deathDay;
+    }
+
+    public short getSex() {
+        return sex;
+    }
+
+    public void setSex(short sex) {
+        this.sex = sex;
+    }
+
+    public short getSinger() {
+        return singer;
+    }
+
+    public void setSinger(short singer) {
+        this.singer = singer;
+    }
+
+    public short getVk() {
+        return vk;
+    }
+
+    public void setVk(short vk) {
+        this.vk = vk;
+    }
+
+    public short getInstagram() {
+        return instagram;
+    }
+
+    public void setInstagram(short instagram) {
+        this.instagram = instagram;
+    }
+
+    public short getTwitter() {
+        return twitter;
+    }
+
+    public void setTwitter(short twitter) {
+        this.twitter = twitter;
+    }
+
+    public short getFacebook() {
+        return facebook;
+    }
+
+    public void setFacebook(short facebook) {
+        this.facebook = facebook;
+    }
 }

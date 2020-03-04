@@ -1,22 +1,22 @@
 package info.vziks.skeleton.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Proxy;
 import org.hibernate.annotations.Type;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.io.Serializable;
+import javax.validation.constraints.Size;
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
-/**
- * Class AccountRepository
- * Project web-spring
- *
- * @author Anton Prokhorov <vziks@live.ru>
- */
 @Entity
 @Table(name = "users", indexes = {@Index(name = "users_k_nick", columnList = "nick")})
-public class Account extends BaseRecord implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+@Proxy(lazy = false)
+public class User extends BaseRecord implements UserDetails {
 
     @Column(length = 100)
     private String nick;
@@ -24,14 +24,21 @@ public class Account extends BaseRecord implements Serializable {
     @Column(length = 100)
     private String name;
 
-    @Column(length = 200)
-    private String email;
-
     @Lob
     private String credo;
 
-    @Column(length = 200)
-    private String pswhash;
+    @Size(min = 2, message = "Минимум 3 символа")
+    private String username;
+
+    @JsonIgnore
+    @Size(min = 3, message = "Минимум 3 символа")
+    private String password;
+
+    @Transient
+    private String passwordConfirm;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Role> roles = new HashSet<>();
 
     @Column(columnDefinition = "SMALLINT")
     @Type(type = "org.hibernate.type.ShortType")
@@ -89,12 +96,8 @@ public class Account extends BaseRecord implements Serializable {
         this.name = name;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getCredo() {
@@ -103,14 +106,6 @@ public class Account extends BaseRecord implements Serializable {
 
     public void setCredo(String credo) {
         this.credo = credo;
-    }
-
-    public String getPswhash() {
-        return pswhash;
-    }
-
-    public void setPswhash(String pswhash) {
-        this.pswhash = pswhash;
     }
 
     public short getSex() {
@@ -210,4 +205,56 @@ public class Account extends BaseRecord implements Serializable {
         this.active = active;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getRoles();
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
 }
