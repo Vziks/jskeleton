@@ -1,6 +1,7 @@
 package info.vziks.skeleton.service;
 
 import info.vziks.skeleton.entity.User;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ public interface IUserService {
 
     boolean addUser(User account);
 
-    void updateUser(User account);
+    void updateUser(@AuthenticationPrincipal User currentUser, User account);
 
     User getUserByEmail(String email);
 }

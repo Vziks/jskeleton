@@ -1,7 +1,6 @@
 package info.vziks.skeleton.entity;
 
 import com.vladmihalcea.hibernate.type.array.IntArrayType;
-import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
 

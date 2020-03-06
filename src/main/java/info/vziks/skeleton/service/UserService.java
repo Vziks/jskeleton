@@ -6,6 +6,7 @@ import info.vziks.skeleton.repository.RoleRepository;
 import info.vziks.skeleton.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -77,8 +78,11 @@ public class UserService implements UserDetailsService, IUserService {
     }
 
     @Override
-    public void updateUser(User account) {
+    public void updateUser(@AuthenticationPrincipal User currentUser, User account) {
         User user = userRepository.findByUsername(account.getUsername());
+        if (!user.getUsername().equals(currentUser.getUsername())) {
+            throw new IllegalArgumentException("You can save only your data");
+        }
         user.setPassword(encoder.encode(account.getPassword()));
         userRepository.save(user);
     }

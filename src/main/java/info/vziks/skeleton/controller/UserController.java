@@ -6,8 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,19 +31,15 @@ public class UserController {
     private IUserService userService;
 
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
-    public String currentUser(Model model) {
-
-        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
-        String email = loggedInUser.getName();
-        User user = userService.getUserByEmail(email);
-
+    public String currentUser(Model model, @AuthenticationPrincipal User user) {
         model.addAttribute("user", user);
 
         return "profile";
     }
 
     @RequestMapping(value = "/profile", method = RequestMethod.POST)
-    public String regUser(
+    public String saveUser(
+            @AuthenticationPrincipal User currentUser,
             @ModelAttribute("user") @Valid User user,
             BindingResult bindingResult,
             Model model
@@ -58,7 +53,7 @@ public class UserController {
             return "profile";
         }
 
-        userService.updateUser(user);
+        userService.updateUser(currentUser, user);
         return "redirect:/user/profile";
     }
 
@@ -94,8 +89,8 @@ public class UserController {
     }
 
     @PutMapping("/put")
-    public ResponseEntity<User> updateAccount(@RequestBody User account) {
-        userService.updateUser(account);
+    public ResponseEntity<User> updateAccount(@AuthenticationPrincipal User currentUser, @RequestBody User account) {
+        userService.updateUser(currentUser, account);
         return new ResponseEntity<>(account, HttpStatus.OK);
     }
 
