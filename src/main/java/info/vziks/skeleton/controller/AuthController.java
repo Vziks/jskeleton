@@ -1,6 +1,7 @@
 package info.vziks.skeleton.controller;
 
 import info.vziks.skeleton.entity.User;
+import info.vziks.skeleton.service.AuthenticationSystem;
 import info.vziks.skeleton.service.IUserService;
 import info.vziks.skeleton.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,10 @@ public class AuthController {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginForm() {
-        return "login";
+
+        if (!AuthenticationSystem.isLogged()) return "login"; // or some logic
+        return "redirect:/";
+
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)

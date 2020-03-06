@@ -6,23 +6,28 @@
     <title>Регистрация</title>
 </head>
 <body>
-<section th:insert="index::header"></section>
-<div class="login-page">
-    <div class="form">
-        <form class="register-form" th:method="POST" th:action="@{/auth/registration}" th:object="${user}">
-            <input class="form-control" id="email" type="email" th:field="*{username}" placeholder="Введите email">
-            <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
-            <p th:if="${usernameError}" th:utext="${usernameError}"></p>
-            <input class="form-control" id="password" type="password" th:field="*{password}"
-                   placeholder="Введите пароль">
-            <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
-            <input class="form-control" id="confirm" type="password" th:field="*{passwordConfirm}"
-                   placeholder="Подтвердите пароль">
-            <p th:if="${confirmError}" th:utext="${confirmError}"></p>
-            <button>create</button>
-            <p class="message">Already registered? <a th:href="@{/auth/login}">Sign In</a></p>
-        </form>
+<nav th:replace="base::navigation"></nav>
+<header th:replace="base::headersmall(content='Create an account', subheading='Not registered?')"></header>
+<div class="content">
+    <div class="login-page">
+        <div class="form">
+            <form class="register-form" th:method="POST" th:action="@{/auth/registration}" th:object="${user}">
+                <input class="form-control" id="email" type="email" th:field="*{username}" placeholder="Введите email">
+                <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+                <p th:if="${usernameError}" th:utext="${usernameError}"></p>
+                <input class="form-control" id="password" type="password" th:field="*{password}"
+                       placeholder="Введите пароль">
+                <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+                <input class="form-control" id="confirm" type="password" th:field="*{passwordConfirm}"
+                       placeholder="Подтвердите пароль">
+                <p th:if="${confirmError}" th:utext="${confirmError}"></p>
+                <button>create</button>
+                <p class="message">Already registered? <a th:href="@{/auth/login}">Sign In</a></p>
+            </form>
+        </div>
     </div>
 </div>
+<hr th:replace="base::hr"/>
+<footer th:replace="base::footer"></footer>
 </body>
 </html>

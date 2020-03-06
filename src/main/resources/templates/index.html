@@ -6,27 +6,8 @@
     <title>Страница</title>
 </head>
 <body>
-<header th:fragment="header">
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <a th:text="${@appService.getAppName()}" th:fragment="appName" class="navbar-brand" th:href="@{/}"><span th:fragment="name">SprinBoot</span></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/auth/login}">
-                        Войти
-                    </a>
-                    <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/logout}">
-                        Выйти
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-</header>
+<nav th:replace="base::navigation"></nav>
+<header th:replace="base::headerbig"></header>
 <p sec:authorize="hasRole('USER')">
     <span sec:authentication="name"></span>,
     Вы можете добавлять события и тд

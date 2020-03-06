@@ -41,11 +41,15 @@ public class WebSkeletonSecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/user/**").not().fullyAuthenticated()
-                .antMatchers("/auth/registration").not().fullyAuthenticated()
+                .antMatchers(
+                        "/auth/registration",
+                        "/user/**"
+                ).not().fullyAuthenticated()
 //                .antMatchers("/foruser/**").hasRole("USER")
 //                .antMatchers("/foradmin/**").hasRole("ADMIN")
-                .antMatchers("/").permitAll()
+                .antMatchers("/",
+                        "/about",
+                        "/contact").permitAll()
 //                .antMatchers("/webjars/**", "/js/**", "/css/**", "/img/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -65,7 +69,7 @@ public class WebSkeletonSecurityConfig extends WebSecurityConfigurerAdapter {
         webSecurity
                 .ignoring()
                 .antMatchers("/webjars/**",
-                        "/js/**", "/css/**", "/img/**");
+                        "/js/**", "/css/**", "/img/**", "/webfonts/**");
     }
 
     @Autowired
@@ -79,5 +83,6 @@ public class WebSkeletonSecurityConfig extends WebSecurityConfigurerAdapter {
     public AppNameService appService() {
         return () -> "AppName";
     }
+
 
 }

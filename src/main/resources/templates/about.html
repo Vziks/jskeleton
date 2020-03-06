@@ -7,7 +7,7 @@
 </head>
 <body>
 <nav th:replace="base::navigation"></nav>
-<header th:replace="base::headerbig"></header>
+<header th:replace="base::headerbig(content='About Me', subheading='This is what I do.', image='about')"></header>
 <div class="container">
     <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
@@ -17,7 +17,6 @@
         </div>
     </div>
 </div>
-
 <hr th:replace="base::hr"/>
 <footer th:replace="base::footer"></footer>
 <footer th:replace="base::bottom"></footer>

@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.GetMapping;
  *
  * @author Anton Prokhorov <vziks@live.ru>
  */
-@Controller
+//@Controller
 public class MainController {
 
-    @GetMapping("/")
-    public String main() {
-        return "main";
-    }
+//    @GetMapping("/")
+//    public String main() {
+//        return "main";
+//    }
 }
