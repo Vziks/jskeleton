@@ -37,10 +37,8 @@ public class AuthController {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginForm() {
-
         if (!AuthenticationSystem.isLogged()) return "login"; // or some logic
         return "redirect:/";
-
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)

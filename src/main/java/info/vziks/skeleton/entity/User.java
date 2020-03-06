@@ -28,6 +28,7 @@ public class User extends BaseRecord implements UserDetails {
     private String credo;
 
     @Size(min = 2, message = "Минимум 3 символа")
+    @Column(unique=true)
     private String username;
 
     @JsonIgnore

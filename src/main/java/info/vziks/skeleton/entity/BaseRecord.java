@@ -26,8 +26,8 @@ abstract public class BaseRecord {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @GenericGenerator(name = "increment", strategy = "increment")
-    private int id;
+    @Column(columnDefinition = "serial")
+    private Long id;
 
     @Basic
     @Temporal(TemporalType.TIMESTAMP)
@@ -37,7 +37,7 @@ abstract public class BaseRecord {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 

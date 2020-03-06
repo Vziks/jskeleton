@@ -2,3 +2,4 @@
 target
 *.iml
 *.sql
+!src/main/resources/db/migration/*.sql

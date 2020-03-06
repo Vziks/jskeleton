@@ -3,6 +3,7 @@ package info.vziks.skeleton.config;
 import info.vziks.skeleton.config.utils.AppNameService;
 import info.vziks.skeleton.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -23,6 +24,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableWebSecurity
 public class WebSkeletonSecurityConfig extends WebSecurityConfigurerAdapter {
 
+
+    @Value("${app.name:ApplicationName}")
+    private String appName;
+
     private UserService userService;
 
     @Autowired
@@ -42,10 +47,9 @@ public class WebSkeletonSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers(
-                        "/auth/registration",
-                        "/user/**"
+                        "/auth/*"
                 ).not().fullyAuthenticated()
-//                .antMatchers("/foruser/**").hasRole("USER")
+                .antMatchers("/user/**").hasRole("USER")
 //                .antMatchers("/foradmin/**").hasRole("ADMIN")
                 .antMatchers("/",
                         "/about",
@@ -81,7 +85,7 @@ public class WebSkeletonSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean(name = "appService")
     public AppNameService appService() {
-        return () -> "AppName";
+        return () -> this.appName;
     }
 
 

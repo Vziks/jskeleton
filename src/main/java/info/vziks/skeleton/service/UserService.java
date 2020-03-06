@@ -78,7 +78,9 @@ public class UserService implements UserDetailsService, IUserService {
 
     @Override
     public void updateUser(User account) {
-        userRepository.save(account);
+        User user = userRepository.findByUsername(account.getUsername());
+        user.setPassword(encoder.encode(account.getPassword()));
+        userRepository.save(user);
     }
 
     @Override
@@ -87,7 +89,6 @@ public class UserService implements UserDetailsService, IUserService {
         if (!Objects.isNull(user)) {
             return false;
         } else {
-
             Role role = roleRepository.findByName("ROLE_USER");
             account.getRoles().add(role);
             account.setPassword(encoder.encode(account.getPassword()));
